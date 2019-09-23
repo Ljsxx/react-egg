@@ -1,0 +1,56 @@
+
+.wrap {
+  background: #000;
+  .box {
+    border: 1px solid $colorWeight;
+    width: 350px;
+    border-radius: 6px;
+    transition: .3s;
+    padding: 20px 0;
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+  }
+  .box:hover {
+    box-shadow: 3px 0 20px $colorWeight;
+  }
+  .box-title {
+    font-size: 30px;
+    text-align: center;
+    color: $colorWeight;
+    cursor: default;
+    padding-bottom: 20px;
+  }
+  .box-main {
+    padding: 10px;
+  }
+  .box-main__item {
+    width: 100%;
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      height: 40px;
+      font-size: 20px;
+      background: none;
+      color: $colorWeight;
+      border-color: $colorLight;
+      outline-color: $colorWeight;
+    }
+  }
+  .box-main__btn {
+    cursor: pointer;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid $colorLight;
+    text-align: center;
+    font-size: 24px;
+    color: $colorLight;
+    transition: .3s;
+  }
+  .box-main__btn:hover {
+    border-color: $colorWeight;
+    color: $colorWeight;
+  }
+}
