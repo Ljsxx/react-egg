@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styles from '../assets/css/pages/login.module.scss'
 import CanvasNest from '../plugins/canvas-nest/index'
+import Axios from '@/axios'
 
 class Login extends Component {
   constructor (props) {
@@ -41,6 +42,18 @@ class Login extends Component {
   }
   goSubmit = () => {
     console.log('提交')
+    Axios.post('/login', {
+      account: this.state.account,
+      password: this.state.password
+    }).then(res => {
+      if (res.data && res.data.code === 200) {
+        console.log('登陆成功')
+      } else {
+        console.log('登陆失败')
+      }
+    }).catch(() => {
+      console.log('网络异常')
+    })
   }
 
   handleInput = (e, type) => {

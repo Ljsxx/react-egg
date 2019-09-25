@@ -21,5 +21,5 @@ axios.interceptors.response.use(response => {
     }
     return response
 })
-// 上传接口的配置
-export const upLoadUrl = baseUrl
+
+export default axios
