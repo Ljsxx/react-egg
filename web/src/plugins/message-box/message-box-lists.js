@@ -20,6 +20,7 @@ class MessageBoxLists extends Component {
   add = (item) => {
     const { lists } = this.state
     item.key = this.getKey()
+    item.hide = () => this.remove(item.key)
     if (lists.every(ele => item.key !== ele.key)) {
       if (lists.length > 0 && lists[lists.length - 1].type === 'loading') {
         lists.push(item)
@@ -36,6 +37,7 @@ class MessageBoxLists extends Component {
         }, item.duration)
       }
     }
+    return item
   }
 
   remove = (key) => {
@@ -47,6 +49,21 @@ class MessageBoxLists extends Component {
             setTimeout(() => {
               item.onClose()
             }, this.transitionTime)
+          }
+          return false
+        }
+        return true
+      })
+    })
+  }
+
+  hide = (type) => {
+    const { lists } = this.state
+    this.setState({
+      lists: lists.filter(item => {
+        if (item.type === type) {
+          if (item.onClose) {
+            item.onClose()
           }
           return false
         }
@@ -82,6 +99,9 @@ function createLists () {
   return {
     add (item) {
       return ref.current.add(item)
+    },
+    hide (type) {
+      return ref.current.hide(type)
     },
     destroy () {
       ReactDom.unmountComponentAtNode(div)

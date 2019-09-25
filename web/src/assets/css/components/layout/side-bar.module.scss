@@ -1,0 +1,146 @@
+.side-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: $menuWidth;
+  border-right: 1px solid $colorWeight;
+  box-sizing: border-box;
+  z-index: 9;
+  background: #000;
+  .side-logo {
+    width: 100%;
+    height: 80px;
+    padding: 20px 10px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .side-lists {
+    position: absolute;
+    top: 80px;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+  }
+  .side-item {
+    width: 100%;
+    text-align: center;
+    padding: 5px 5px;
+    cursor: pointer;
+    color: #666;
+  }
+  .side-item:hover {
+    background: $colorLight;
+  }
+  .side-item__active {
+    background: $colorWeight;
+    color: #fff;
+  }
+  .side-item__active:hover {
+    background: $colorWeight;
+    color: #fff;
+  }
+  .side-item__icon i {
+    font-size: 25px;
+  }
+  .side-item__name {
+    font-size: 14px;
+  }
+  .side-bot {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 80px;
+    box-sizing: border-box;
+    color: #666;
+    text-align: center;
+  }
+  .side-child {
+    position: fixed;
+    left: $menuWidth;
+    top: 0;
+    bottom: 0;
+    width: 140px;
+    border: 1px solid $colorLight;
+    cursor: default;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: left;
+    background: #000;
+    padding-top: 50px;
+    box-shadow: 2px 0 10px $colorWeight;
+  }
+  .side-child__pname {
+    font-size: 16px;
+    line-height: 26px;
+    color: #666;
+  }
+  .side-child__lists {
+    padding-left: 10px;
+    font-size: 14px;
+  }
+  .side-child__item {
+    padding: 5px;
+    color: #666;
+    cursor: pointer;
+  }
+  .side-child__item:hover {
+    background: $colorLight;
+  }
+  .side-child__itemactive {
+    color: #fff!important;
+    background: $colorWeight!important;
+  }
+}
+
+.side-fade-enter {
+  opacity: 0.01;
+  transform: translateX(-100%);
+}
+
+.side-fade-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  // transform: scale(1);
+  transition: all 3s;
+}
+
+.side-fade-exit {
+  opacity: 1;
+}
+
+.side-fade-exit-active {
+  opacity: 0.01;
+  transform: translateX(-100%);
+  transition: all 3s;
+}
+
+/*组件入场前的状态*/
+.animation-enter{
+  transform:translateX(-100%);
+  opacity:0;
+}
+
+/*组件正在入场时候的动画, all 指的是所有属性一起变化，ease-in-out 先快后慢的一种时间线*/
+.animation-enter-active{
+  transform:translateX(0);
+  opacity:1;
+  transition:all 300ms;
+}
+
+/*组件出场前的动画*/
+.animation-exit {
+  opacity: 1;
+  transform:translateX(0);
+}
+
+/*组件正在出场的动画*/
+.animation-exit-active {
+  opacity:0;
+  transform:translateX(-100%);
+  transition:all 300ms;
+}

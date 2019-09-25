@@ -9,11 +9,20 @@ export const initStore = () => {
   }
 }
  
-export const changeLanguage = (langId) => {
+export const changeLanguage = (value) => {
     return dispath => {
         dispath({
             type: types.CHANGE_LANGUAGE,
-            langId
+            value: value
         })
     }
+}
+
+export const setMenuIndex = (value) => {
+  return dispath => {
+      dispath({
+          type: types.SET_MENUINDEX,
+          value: value
+      })
+  }
 }
