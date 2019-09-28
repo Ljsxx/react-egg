@@ -4,7 +4,7 @@ import getPath from '@/router/get-path'
 import { CSSTransition } from 'react-transition-group'
 import {connect} from 'react-redux'
 import { setMenuIndex } from '@/store/actionCreators'
-import SideBarChild from './side-bar-child'
+// import SideBarChild from './side-bar-child'
 const logo = require('@/assets/img/logo.png')
 
 class SideBar extends Component {
