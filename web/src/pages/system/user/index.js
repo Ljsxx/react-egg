@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import Axios from '@/axios'
-import styles from '@/assets/css/pages/system/user.module.scss'
+// import styles from '@/assets/css/pages/system/user.module.scss'
 import MessageBox from '@/plugins/message-box'
+import { Row, Col } from 'antd'
+import EditUser from './components/edit-user'
 class Lists extends Component {
   constructor (props) {
     super(props)
@@ -27,12 +29,22 @@ class Lists extends Component {
         age: 0,
         // 手机号
         phone: ''
-      }
+      },
+      // 弹框
+      editUserDialogType: 'add',
+      editUserDialogVisible: false
     }
   }
 
   componentDidMount () {
     this.getLists()
+    setTimeout(() => {
+      let { formData } = this.state
+      formData['name'] = 'trey'
+      this.setState({
+        formData
+      })
+    }, 1000);
   }
 
   handleInput = (e, type) => {
@@ -57,10 +69,40 @@ class Lists extends Component {
     })
   }
 
-  handleAdd = () => {
+  editUserDialogOpen = (type, info) => {
+    let obj = Object.assign({}, {
+      // 姓名
+      name: '',
+      // 账号
+      account: '',
+      // 密码
+      password: '',
+      // 性别
+      gender: 1,
+      // 年龄
+      age: 0,
+      // 手机号
+      phone: ''
+    }, info)
     this.setState({
-      isAdd: !this.state.isAdd
+      editUserDialogType: type,
+      formData: obj,
+      editUserDialogVisible: true
     })
+  }
+  editUserDialogClose = () => {
+    this.setState({
+      editUserDialogVisible: false
+    })
+  }
+  editUserDialogConfirm = (info) => {
+    console.log('info', info)
+    this.editUserDialogClose()
+    if (this.state.editUserDialogType === 'add') {
+      this.handleAdd()
+      return
+    }
+    this.handleEdit()
   }
 
   formInput = (e, type) => {
@@ -71,7 +113,7 @@ class Lists extends Component {
     })
   }
 
-  handleSubmit = () => {
+  handleAdd = () => {
     if (!this.state.formData.name) {
       MessageBox.warning('请输入姓名')
       return
@@ -84,89 +126,97 @@ class Lists extends Component {
       MessageBox.warning('请输入密码')
       return
     }
-    if (!this.state.formData.account) {
-      MessageBox.warning('请输入账号')
-      return
-    }
-    console.log('formData', this.state.formData)
-    this.goSubmit()
+    this.goAdd()
   }
 
-  goSubmit = () => {
+  goAdd = () => {
     Axios.post('/user/add', this.state.formData).then(res => {
-      console.log('res', res)
+      if (res.data && res.data.code === 200) {
+        MessageBox.success('添加成功')
+        this.getLists()
+      }
     }).catch(() => {
       MessageBox.error('网络异常')
     })
-  } 
+  }
+  // 编辑
+  handleEdit = () => {
+    Axios.post('/user/edit', this.state.formData).then(res => {
+      if (res.data && res.data.code === 200) {
+        MessageBox.success('修改成功')
+        this.getLists()
+      }
+    }).catch(() => {
+      MessageBox.error('网络异常')
+    })
+  }
+  // 删除
+  handleDel = (item) => {
+    Axios.post('/user/del', {
+      ids: [item.id]
+    }).then(res => {
+      if (res.data && res.data.code === 200) {
+        MessageBox.success('删除成功')
+        this.getLists()
+      }
+    }).catch(() => {
+      MessageBox.error('网络异常')
+    })
+  }
 
   render () {
     return (
-      <div>
+      <div className="p-10">
         <h1>用户-列表</h1>
         <div>
           <input placeholder="请输入姓名" value={this.state.sendData.keyword} onChange={(e) => this.handleInput(e, 'keyword')}></input>
           <input placeholder="请输入页码" value={this.state.sendData.pageIndex} onChange={(e) => this.handleInput(e, 'pageIndex')} type="number"></input>
           <input placeholder="请输入页数" value={this.state.sendData.pageSize} onChange={(e) => this.handleInput(e, 'pageSize')} type="number"></input>
           <button onClick={() => this.getLists()}>搜索</button>
-        </div>
-        <div className="pt-20 pb-20">
-          {
-            this.state.isAdd ? (
-              <form className={`${styles['form']}`}>
-                <label>
-                  <span>姓名:</span>
-                  <input placeholder="请输入姓名" value={this.state.formData.name} onChange={(e) => this.formInput(e, 'name')}></input>
-                </label>
-                <label>
-                  <span>账号:</span>
-                  <input placeholder="请输入账号" value={this.state.formData.account} onChange={(e) => this.formInput(e, 'account')}></input>
-                </label>
-                <label>
-                  <span>密码:</span>
-                  <input placeholder="请输入密码" value={this.state.formData.password} onChange={(e) => this.formInput(e, 'password')} type="password"></input>
-                </label>
-                <label>
-                  <span>性别:</span>
-                  <select className="w-174 h-27" value={this.state.formData.gender} onChange={(e) => this.formInput(e, 'gender')}>
-                    <option label="男" value={1}></option>
-                    <option label="女" value={2}></option>
-                    <option label="其他" value={-1}></option>
-                  </select>
-                </label>
-                <label>
-                  <span>年龄:</span>
-                  <input placeholder="请输入年龄" value={this.state.formData.age} onChange={(e) => this.formInput(e, 'age')} type="number"></input>
-                </label>
-                <label>
-                  <span>手机号:</span>
-                  <input placeholder="请输入手机号" value={this.state.formData.phone} onChange={(e) => this.formInput(e, 'phone')}></input>
-                </label>
-              </form>
-            ) : ''
-          }
-          {
-            this.state.isAdd ? (
-              <div className="pl-50">
-                <button onClick={() => this.handleAdd()}>取消</button>
-                <button onClick={() => this.handleSubmit()}>提交</button>
-              </div>
-            ) : (
-              <div className="pl-50">
-                <button onClick={() => this.handleAdd()}>添加用户</button>
-              </div>
-            )
-          }
+          <button onClick={() => this.editUserDialogOpen('add', {})}>添加用户</button>
         </div>
         <div>
           <ul>
+            <Row>
+              <Col span={2}>#</Col>
+              <Col span={2}>Id</Col>
+              <Col span={3}>账号</Col>
+              <Col span={3}>姓名</Col>
+              <Col span={3}>手机号</Col>
+              <Col span={3}>性别</Col>
+              <Col span={3}>年龄</Col>
+              <Col span={5}>操作</Col>
+            </Row>
             {
-              this.state.lists.map(item => (
-                <li key={item.id}>{item.id} -- {item.name} -- {item.account}</li>
+              this.state.lists.map((item, index) => (
+                <li key={item.id}>
+                  <Row>
+                    <Col span={2}>{index}</Col>
+                    <Col span={2}>{item.id}</Col>
+                    <Col span={3}>{item.account}</Col>
+                    <Col span={3}>{item.name}</Col>
+                    <Col span={3}>{item.phone}</Col>
+                    <Col span={3}>{item.gender === 1 ? '男' : (item.gender === 2 ? '女' : '其他')}</Col>
+                    <Col span={3}>{item.age}</Col>
+                    <Col span={5}>
+                      <button onClick={() => this.editUserDialogOpen('edit', item)}>编辑</button>
+                      <button onClick={() => this.handleDel(item)}>删除</button>
+                    </Col>
+                  </Row>
+                </li>
               ))
             }
           </ul>
         </div>
+        {/* 新增、编辑弹框 */}
+        {
+          this.state.editUserDialogVisible ? 
+            <EditUser
+              formData={this.state.formData}
+              editUserDialogType={this.state.editUserDialogType}
+              editUserDialogClose={this.editUserDialogClose}
+              editUserDialogConfirm={this.editUserDialogConfirm} /> : ''
+        }
       </div>
     )
   }

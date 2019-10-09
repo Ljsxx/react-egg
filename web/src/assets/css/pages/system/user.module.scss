@@ -1,11 +1,17 @@
 .form {
-  width: 260px;
-  label {
+  width: 100%;
+  div {
     margin-bottom: 5px;
   }
   span {
     display: inline-block;
     width: 50px;
+  }
+  input {
+    width: 100%;
+  }
+  select {
+    width: 100%;
   }
 }
 input {
@@ -19,4 +25,25 @@ option {
 }
 button {
   background: none;
+}
+
+.dialog {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  z-index: 99;
+  background: rgba(0,0,0,0.8);
+  .dialog-box {
+    width: 50%;
+    margin: 150px auto 50px;
+    padding: 10px;
+    border: 1px solid $colorLight;
+  }
+  .dialog-footer {
+    padding-top: 10px;
+    text-align: right;
+  }
 }

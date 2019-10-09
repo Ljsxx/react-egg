@@ -5,12 +5,10 @@ import MessageBoxListsDom from './message-box-lists'
 let messageBoxLists
 const boxAdd = (type, content, duration = 3000, onClose) => {
   if (!messageBoxLists) messageBoxLists = MessageBoxListsDom
-  console.log('messageBoxLists', messageBoxLists)
   return messageBoxLists.add({type, content, duration, onClose})
 }
 const boxHide = (type = 'loading') => {
   if (!messageBoxLists) messageBoxLists = MessageBoxListsDom
-  console.log('messageBoxLists', messageBoxLists)
   return messageBoxLists.hide(type)
 }
 
