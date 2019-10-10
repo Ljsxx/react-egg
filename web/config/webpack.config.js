@@ -31,6 +31,8 @@ const postcssNormalize = require('postcss-normalize');
 
 const appPackageJson = require(paths.appPackageJson);
 
+// 主题颜色
+const antdTheme = require('./antd-theme')
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
@@ -367,6 +369,7 @@ module.exports = function(webpackEnv) {
                 ),
                 
                 plugins: [
+                  ["import", {"libraryName": "antd", "libraryDirectory":"es", "style": true}],
                   [
                     require.resolve('babel-plugin-named-asset-import'),
                     {
@@ -497,7 +500,7 @@ module.exports = function(webpackEnv) {
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.less$/, /\.html$/, /\.json$/],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
               },
@@ -506,6 +509,25 @@ module.exports = function(webpackEnv) {
             // Make sure to add the new loader(s) before the "file" loader.
           ],
         },
+        {
+          test: /\.less$/,
+          include: /node_modules/,
+          use: [
+            {
+              loader: 'style-loader',
+            },
+            {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'less-loader',
+              options: {
+                modifyVars: antdTheme,
+                javascriptEnabled: true
+              }
+            }
+          ]
+        }
       ],
     },
     plugins: [

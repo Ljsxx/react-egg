@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import MessageBox from '@/plugins/message-box'
-import { Button } from 'antd'
+import { Button, Message, Modal } from 'antd'
 
 var lod
 class Layout extends Component {
 
   msg = (type) => {
     MessageBox[type](type)
+  }
+  antdMsg = (type) => {
+    Message[type](type)
   }
   msgLoading = (type) => {
     lod = MessageBox[type](type)
@@ -21,14 +24,21 @@ class Layout extends Component {
   des = () => {
     
   }
+  modalOpen = (type) => {
+    Modal[type]({
+      title: '提示',
+      content: type
+    })
+  }
 
   render () {
     return (
       <div>
         <ul>
-          <Button onClick={() => this.msg('info')}>info</Button>
-          <Button onClick={() => this.msg('success')}>success</Button>
-          <Button onClick={() => this.msg('error')}>error</Button>
+          <Button type="primary" onClick={() => this.antdMsg('info')}>antd-info</Button>
+          <Button type="dashed" onClick={() => this.msg('info')}>info</Button>
+          <Button type="success" onClick={() => this.msg('success')}>success</Button>
+          <Button type="danger" onClick={() => this.msg('error')}>error</Button>
           <Button onClick={() => this.msg('warning')}>warning</Button>
           <Button onClick={() => this.msg('loading')}>loading</Button>
           <Button onClick={() => this.msgLoading('loading')}>loading1</Button>
@@ -39,6 +49,13 @@ class Layout extends Component {
         </div>
         <div>
           <Button onClick={() => this.des()}>destroy</Button>
+        </div>
+        <div>
+          <Button onClick={() => this.modalOpen('info')}>info</Button>
+          <Button onClick={() => this.modalOpen('success')}>success</Button>
+          <Button onClick={() => this.modalOpen('error')}>error</Button>
+          <Button onClick={() => this.modalOpen('warning')}>warning</Button>
+          <Button onClick={() => this.modalOpen('confirm')}>confirm</Button>
         </div>
       </div>
     )
