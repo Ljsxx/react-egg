@@ -45,18 +45,28 @@ class AdminController extends Controller {
       return;
     }
     this.ctx.session.user = user[0];
-    this.ctx.cookies.set('userinfo', JSON.stringify(user[0]), {
-      // 设置这个键值对在浏览器的最长保存时间。是一个从服务器当前时刻开始的毫秒数。
-      maxAge: 30 * 3600 * 1000,
-      // 设置键值对是否可以被 js 访问，默认为 true，不允许被 js 访问
-      httpOnly: true,
-      // 设置是否对 Cookie 进行加密，如果设置为 true，则在发送 Cookie 前会对这个键值对的值进行加密，客户端无法读取到 Cookie 的明文值。默认为 false
-      encrypt: false,
-      // 设置是否对 Cookie 进行签名，如果设置为 true，则设置键值对的时候会同时对这个键值对的值进行签名，后面取的时候做校验，可以防止前端对这个值进行篡改。默认为 true。
-      signed: true,
-    });
+    this.ctx.session.userId = user[0].id;
+    // this.ctx.cookies.set('userinfo', JSON.stringify(user[0]), {
+    //   // 设置这个键值对在浏览器的最长保存时间。是一个从服务器当前时刻开始的毫秒数。
+    //   maxAge: 30 * 3600 * 1000,
+    //   // 设置键值对是否可以被 js 访问，默认为 true，不允许被 js 访问
+    //   httpOnly: true,
+    //   // 设置是否对 Cookie 进行加密，如果设置为 true，则在发送 Cookie 前会对这个键值对的值进行加密，客户端无法读取到 Cookie 的明文值。默认为 false
+    //   encrypt: false,
+    //   // 设置是否对 Cookie 进行签名，如果设置为 true，则设置键值对的时候会同时对这个键值对的值进行签名，后面取的时候做校验，可以防止前端对这个值进行篡改。默认为 true。
+    //   signed: true,
+    // });
     this.ctx.body = {
-      msg: '登录成功',
+      msg: '成功',
+      code: 200,
+    };
+  }
+  // 退出
+  async logout() {
+    this.ctx.session.user = null;
+    this.ctx.session.userId = null;
+    this.ctx.body = {
+      msg: '成功',
       code: 200,
     };
   }

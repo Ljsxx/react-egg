@@ -58,14 +58,15 @@ class Lists extends Component {
     Axios.get('/user', {
       params: this.state.sendData
     }).then(res => {
-      console.log('res', res)
-      if (res && res.data) {
+      if (res && res.data && res.data.code === 200) {
         this.setState({
-          lists: res.data
+          lists: res.data.data || []
         })
+      } else {
+        MessageBox.error(res.data && res.data.msg)
       }
     }).catch(() => {
-      console.log('网络异常')
+      MessageBox.error('网络异常')
     })
   }
 
@@ -96,7 +97,6 @@ class Lists extends Component {
     })
   }
   editUserDialogConfirm = (info) => {
-    console.log('info', info)
     this.editUserDialogClose()
     if (this.state.editUserDialogType === 'add') {
       this.handleAdd()
@@ -134,6 +134,8 @@ class Lists extends Component {
       if (res.data && res.data.code === 200) {
         MessageBox.success('添加成功')
         this.getLists()
+      } else {
+        MessageBox.error(res.data.msg)
       }
     }).catch(() => {
       MessageBox.error('网络异常')
@@ -145,6 +147,8 @@ class Lists extends Component {
       if (res.data && res.data.code === 200) {
         MessageBox.success('修改成功')
         this.getLists()
+      } else {
+        MessageBox.error(res.data.msg)
       }
     }).catch(() => {
       MessageBox.error('网络异常')
@@ -158,6 +162,20 @@ class Lists extends Component {
       if (res.data && res.data.code === 200) {
         MessageBox.success('删除成功')
         this.getLists()
+      } else {
+        MessageBox.error(res.data.msg)
+      }
+    }).catch(() => {
+      MessageBox.error('网络异常')
+    })
+  }
+  // 查看详情
+  checkDetail = (item) => {
+    Axios.get('/user/' + item.id).then(res => {
+      if (res.data && res.data.code === 200) {
+        this.editUserDialogOpen('detail', res.data.data)
+      } else {
+        MessageBox.error(res.data.msg)
       }
     }).catch(() => {
       MessageBox.error('网络异常')
@@ -199,6 +217,7 @@ class Lists extends Component {
                     <Col span={3}>{item.gender === 1 ? '男' : (item.gender === 2 ? '女' : '其他')}</Col>
                     <Col span={3}>{item.age}</Col>
                     <Col span={5}>
+                      <button onClick={() => this.checkDetail(item)}>查看</button>
                       <button onClick={() => this.editUserDialogOpen('edit', item)}>编辑</button>
                       <button onClick={() => this.handleDel(item)}>删除</button>
                     </Col>

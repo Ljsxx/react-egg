@@ -4,6 +4,8 @@ import getPath from '@/router/get-path'
 import { CSSTransition } from 'react-transition-group'
 import {connect} from 'react-redux'
 import { setMenuIndex } from '@/store/actionCreators'
+import Axios from '@/axios'
+import MessageBox from '@/plugins/message-box'
 // import SideBarChild from './side-bar-child'
 const logo = require('@/assets/img/logo.png')
 
@@ -76,6 +78,18 @@ class SideBar extends Component {
       this.props.history.push(getPath(item.name + '-' + subItem.name))
     }
   }
+  // 退出登录
+  logout = () => {
+    Axios.get('/logout').then(res => {
+      if (res.data && res.data.code === 200) {
+        this.props.history.push('/login')
+      } else {
+        MessageBox.error(res.data.msg)
+      }
+    }).catch(() => {
+      MessageBox.error('网络异常')
+    })
+  }
 
   render () {
     let pathNow = (this.props && this.props.location && this.props.location.pathname) || '/'
@@ -136,6 +150,7 @@ class SideBar extends Component {
             <img src="" alt=""></img>
           </div>
           <p className={`${styles['side-bot__name']}`}>管理员</p>
+          <button onClick={() => this.logout()}>退出</button>
         </div>
       </div>
     )

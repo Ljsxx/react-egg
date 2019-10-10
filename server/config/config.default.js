@@ -50,8 +50,25 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1569376069854_6938';
 
   // add your middleware config here
-  config.middleware = [];
-
+  config.middleware = [
+    'auth',
+  ];
+  config.auth = {
+    // 免验证路由
+    whiteUrls: [
+      '/login',
+      '/logout',
+    ],
+  };
+  // session配置
+  config.session = {
+    key: 'ESS_SE',
+    maxAge: 30 * 60 * 1000,
+    httpOnly: true,
+    encrupt: true,
+    // 每次访问页面都会给session会话延长时间
+    renew: true,
+  };
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

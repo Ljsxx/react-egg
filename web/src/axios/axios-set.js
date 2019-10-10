@@ -10,14 +10,15 @@ axios.interceptors.request.use(config => {
 })
 axios.interceptors.response.use(response => {
     const code = response.data.code
+    console.log('code', code)
     if (code === 601) {
         // 未登录
-      window.location.href = '/web/index.html#/login'
+      window.location.href = '/login'
       // message.error('请登录！')
       return
     }
     if (code !== 200 && code !== 0) {
-        // return
+      // return
     }
     return response
 })

@@ -5,12 +5,33 @@ const Controller = require('egg').Controller;
 const crypto = require('crypto');
 
 class UserController extends Controller {
-  async info() {
+  async lists() {
     console.log('ctx', this.ctx);
     console.log('session.user', this.ctx.session.user);
     console.log('cookie', this.ctx.cookies.get('userinfo'));
-    const user = await this.ctx.service.user.getLists(this.ctx.query);
-    this.ctx.body = user;
+    const arr = await this.ctx.service.user.getLists(this.ctx.query);
+    this.ctx.body = {
+      msg: '成功',
+      data: arr,
+      code: 200,
+    };
+  }
+
+  // 用户详情
+  async detail() {
+    const params = this.ctx.params;
+    const arr = await this.ctx.service.user.findById(params);
+    if (arr && arr.length) {
+      this.ctx.body = {
+        msg: '成功',
+        data: arr[0],
+        code: 200,
+      };
+      return;
+    }
+    this.ctx.body = {
+      msg: '用户不存在',
+    };
   }
 
   // 添加用户
@@ -31,11 +52,9 @@ class UserController extends Controller {
       this.ctx.body = res;
       return;
     }
-    let md5 = crypto.createHash('md5');
+    const md5 = crypto.createHash('md5');
     formData.newPas = md5.update(formData.password).digest('hex');
     const user = await this.ctx.service.user.addUser(formData);
-    // res.msg = '成功';
-    // res.data = user;
     this.ctx.body = user;
   }
 
