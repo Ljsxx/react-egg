@@ -6,21 +6,11 @@ const crypto = require('crypto');
 
 class UserController extends Controller {
   async info() {
-    console.log('info');
-    // const { ctx } = this;
-    // const uid = ctx.params.id;
-    console.log('--------------->this<---------------', this.ctx.query);
-    console.log('--------------->ctx<---------------', this.ctx);
+    console.log('ctx', this.ctx);
+    console.log('session.user', this.ctx.session.user);
+    console.log('cookie', this.ctx.cookies.get('userinfo'));
     const user = await this.ctx.service.user.getLists(this.ctx.query);
     this.ctx.body = user;
-  }
-  // 登录
-  async login() {
-    console.log('登录');
-    console.log('--------------->body<---------------', this.ctx.request.body);
-    let md5 = crypto.createHash('md5');
-    let newPas = md5.update(this.ctx.request.body.password).digest('hex');
-    console.log('--------------->newPas<---------------', newPas);
   }
 
   // 添加用户
