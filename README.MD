@@ -15,4 +15,8 @@
 ## 已完成
 > 登录注册
 
+![image](https://github.com/Ljsxx/react-egg/blob/master/web/src/assets/img/login.png)
+
 > 用户管理
+
+![image](https://github.com/Ljsxx/react-egg/blob/master/web/src/assets/img/user.png)
