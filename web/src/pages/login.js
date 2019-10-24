@@ -67,7 +67,7 @@ class Login extends Component {
     return (
       <div className={`${styles['wrap']}`} id="loginWrap" style={{width: this.state.wrapWidth, height: this.state.wrapHeight}}>
         <div className={`${styles['box']}`}>
-          <p className={`${styles['box-title']} no-select`}>资源管理系统</p>
+          <p className={`${styles['box-title']} no-select`}>项目管理系统</p>
           <div className={`${styles['box-main']}`}>
             <form>
               <div className={`${styles['box-main__item']} mb-10`}>
