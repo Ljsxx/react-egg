@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Axios from '@/axios'
 // import styles from '@/assets/css/pages/system/user.module.scss'
 import MessageBox from '@/plugins/message-box'
-import { Row, Col } from 'antd'
+import { Row, Col, Modal } from 'antd'
 import EditUser from './components/edit-user'
 class Lists extends Component {
   constructor (props) {
@@ -37,6 +37,7 @@ class Lists extends Component {
   }
 
   componentDidMount () {
+    console.log('this in user', this)
     this.getLists()
     setTimeout(() => {
       let { formData } = this.state
@@ -156,17 +157,23 @@ class Lists extends Component {
   }
   // 删除
   handleDel = (item) => {
-    Axios.post('/user/del', {
-      ids: [item.id]
-    }).then(res => {
-      if (res.data && res.data.code === 200) {
-        MessageBox.success('删除成功')
-        this.getLists()
-      } else {
-        MessageBox.error(res.data.msg)
+    Modal.confirm({
+      title: '提示',
+      content: '此操作将删除用户，是否继续？',
+      onOk: () => {
+        Axios.post('/user/del', {
+          ids: [item.id]
+        }).then(res => {
+          if (res.data && res.data.code === 200) {
+            MessageBox.success('删除成功')
+            this.getLists()
+          } else {
+            MessageBox.error(res.data.msg)
+          }
+        }).catch(() => {
+          MessageBox.error('网络异常')
+        })
       }
-    }).catch(() => {
-      MessageBox.error('网络异常')
     })
   }
   // 查看详情

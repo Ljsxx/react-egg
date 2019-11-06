@@ -39,7 +39,7 @@ class UserService extends Service {
     if (!arr.length) {
       // 未添加
       const sql = `INSERT INTO p_user(name,account,phone,gender,age,register_time,is_delete)
-      VALUES('${params.name}', '${params.account}', '${params.phone}','${params.gender}','${params.age}','${moment(new Date()).format('YYYY-MM-DD HH:mm:ss')}',0);`;
+      VALUES('${params.name}', '${params.account}', '${params.phone || ''}','${params.gender || 0}','${params.age || 0}','${moment(new Date()).format('YYYY-MM-DD HH:mm:ss')}',0);`;
       // 添加
       await this.app.mysql.query(sql);
       // 拿到id

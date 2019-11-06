@@ -8,7 +8,8 @@ import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
 import redux from './store'
 // router
-import Routers from './router'
+// import Routers from './router'
+import Routers from './router/test-router'
 // axios
 import './axios/axios-set'
 // 中文

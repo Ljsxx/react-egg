@@ -5,6 +5,34 @@ const Controller = require('egg').Controller;
 const crypto = require('crypto');
 
 class AdminController extends Controller {
+  // 注册
+  async register() {
+    const formData = this.ctx.request.body;
+    if (!formData.account) {
+      this.ctx.body = {
+        msg: '账号不能为空',
+      };
+      return;
+    }
+    if (!formData.password) {
+      this.ctx.body = {
+        msg: '密码不能为空',
+      };
+      return;
+    }
+    // 验证用户
+    const user = await this.ctx.service.user.findByAccount(formData);
+    if (user && user.length) {
+      this.ctx.body = {
+        msg: '账号已存在',
+      };
+      return;
+    }
+    const md5 = crypto.createHash('md5');
+    formData.newPas = md5.update(this.ctx.request.body.password).digest('hex');
+    const res = await this.ctx.service.user.addUser(formData);
+    this.ctx.body = res;
+  }
   // 登录
   async login() {
     const formData = this.ctx.request.body;

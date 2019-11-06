@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import getPath from './get-path'
 // 工作台
 import Workbench from '@/pages/workbench/lists'
@@ -10,6 +10,8 @@ import Per from '@/pages/system/per'
 import User from '@/pages/system/user'
 // 消息
 import News from '@/pages/news/lists'
+// error
+import ErrorPage from '@/pages/error'
 
 function Routes () {
   return (
@@ -19,6 +21,8 @@ function Routes () {
       <Route exact path={getPath('系统-权限')} component={Per}></Route>
       <Route exact path={getPath('系统-用户')} component={User}></Route>
       <Route exact path={getPath('消息')} component={News}></Route>
+      <Route exact path="/error" component={ErrorPage}></Route>
+      <Redirect from="/*" to="/error" ></Redirect>
     </Switch>
   )
 }

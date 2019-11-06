@@ -1,6 +1,7 @@
 import 'babel-polyfill'
 import axios from 'axios'
 import {baseUrl} from './base-url'
+import MessageBox from '@/plugins/message-box'
 // import {message} from 'antd'
 axios.defaults.baseURL = baseUrl
 //设置全局允许跨域
@@ -14,7 +15,7 @@ axios.interceptors.response.use(response => {
     if (code === 601) {
         // 未登录
       window.location.href = '/login'
-      // message.error('请登录！')
+      MessageBox.error('请登录！')
       return
     }
     if (code !== 200 && code !== 0) {

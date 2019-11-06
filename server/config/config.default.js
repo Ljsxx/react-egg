@@ -37,7 +37,7 @@ module.exports = appInfo => {
         enable: false,
         ignoreJSON: true,
       },
-      domainWhiteList: [ 'http://localhost:3000' ],
+      domainWhiteList: [ 'http://localhost:3000', 'http://192.168.30.68:8080' ],
     },
     cors: {
       origin: 'http://localhost:3000',
@@ -56,8 +56,11 @@ module.exports = appInfo => {
   config.auth = {
     // 免验证路由
     whiteUrls: [
+      '/',
       '/login',
       '/logout',
+      '/register',
+      '/upload',
     ],
   };
   // session配置
@@ -69,10 +72,18 @@ module.exports = appInfo => {
     // 每次访问页面都会给session会话延长时间
     renew: true,
   };
+  config.cluster = {
+    listen: {
+      path: '',
+      port: 7001,
+      hostname: 'localhost',
+    },
+  };
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
   };
+  // 静态资源
 
   return {
     ...config,

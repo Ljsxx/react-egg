@@ -35,6 +35,9 @@
   -khtml-user-select: none; 
   user-select: none;
 }
+.pointer {
+  cursor: pointer;
+}
 
 body {
   @for $i from 0 through 400 {

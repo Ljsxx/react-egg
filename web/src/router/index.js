@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Login from '../pages/login'
 import Layout from '../pages/layout'
 
@@ -9,6 +9,7 @@ function Routes () {
       <Switch>
         <Route exact path="/login" component={Login}></Route>
         <Route component={Layout}></Route>
+        <Redirect from="/*" to="/login" ></Redirect>
       </Switch>
     </Router>
   )
