@@ -72,8 +72,9 @@ class AdminController extends Controller {
       };
       return;
     }
-    this.ctx.session.user = user[0];
+    // this.ctx.session.user = user[0];
     this.ctx.session.userId = user[0].id;
+    this.ctx.session.roleId = user[0].role_id;
     // this.ctx.cookies.set('userinfo', JSON.stringify(user[0]), {
     //   // 设置这个键值对在浏览器的最长保存时间。是一个从服务器当前时刻开始的毫秒数。
     //   maxAge: 30 * 3600 * 1000,

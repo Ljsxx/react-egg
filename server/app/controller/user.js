@@ -6,9 +6,9 @@ const crypto = require('crypto');
 
 class UserController extends Controller {
   async lists() {
-    console.log('ctx', this.ctx);
-    console.log('session.user', this.ctx.session.user);
-    console.log('cookie', this.ctx.cookies.get('userinfo'));
+    // console.log('ctx', this.ctx);
+    // console.log('session.user', this.ctx.session.user);
+    // console.log('cookie', this.ctx.cookies.get('userinfo'));
     const arr = await this.ctx.service.user.getLists(this.ctx.query);
     this.ctx.body = {
       msg: '成功',

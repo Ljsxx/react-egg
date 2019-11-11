@@ -1,5 +1,6 @@
 import React from 'react'
 import { HashRouter as Router, Route, Redirect, Switch } from '../plugins/my-router-dom'
+// import { BrowserRouter as Router, Route, Redirect, Switch } from '../plugins/my-router-dom'
 import Login from '../pages/login'
 import User from '../pages/system/user/index'
 import Home from '../pages/test/home'

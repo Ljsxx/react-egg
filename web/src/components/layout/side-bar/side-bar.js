@@ -53,6 +53,22 @@ class SideBar extends Component {
     }
   }
 
+  componentDidMount () {
+    this.getPermission()
+  }
+
+  // 获取权限
+  getPermission = () => {
+    Axios.get('/permission').then(res => {
+      if (res.data && res.data.code === 200) {
+      } else {
+        MessageBox.error(res.data.msg)
+      }
+    }).catch(() => {
+      MessageBox.error('网络异常')
+    })
+  }
+
   handleMouseEnter = (index) => {
     this.setState({
       showChildIndex: index

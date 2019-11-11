@@ -26,6 +26,7 @@ class HashRouter extends Component {
 
   render () {
     let value = {
+      type: 'HashRouter',
       history: hashHistory,
       location: Object.assign({
         pathname: '/'

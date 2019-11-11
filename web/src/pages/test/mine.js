@@ -30,6 +30,16 @@ class Home extends Component {
         <div>
           <button onClick={() => this.props.history.back()}>返回</button>
         </div>
+        <div onClick={() => this.pushOther({
+          path: 'car',
+          query: {
+            id: 123,
+            from: 'mine'
+          },
+          match: {
+            key: 'xxjs'
+          }
+        })}>带match跳转-car</div>
         <div>
           <input type="text" value={this.state.path} onChange={(e) => this.handleInput(e)}></input>
           <button onClick={() => this.pushOther(this.state.path)}>跳转</button>

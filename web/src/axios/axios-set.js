@@ -14,7 +14,7 @@ axios.interceptors.response.use(response => {
     console.log('code', code)
     if (code === 601) {
         // 未登录
-      window.location.href = '/login'
+      window.location.href = '/#/login'
       MessageBox.error('请登录！')
       return
     }

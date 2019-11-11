@@ -41,7 +41,7 @@ module.exports = appInfo => {
     },
     cors: {
       origin: 'http://localhost:3000',
-      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
       credentials: true,
     },
   };
@@ -54,9 +54,11 @@ module.exports = appInfo => {
     'auth',
   ];
   config.auth = {
+    // 版本
+    version: 'v1.0',
     // 免验证路由
     whiteUrls: [
-      '/',
+      // '/',
       '/login',
       '/logout',
       '/register',

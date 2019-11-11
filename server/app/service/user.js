@@ -11,7 +11,7 @@ class UserService extends Service {
   async findById(params) {
     const user = await this.app.mysql.select('p_user', {
       where: { id: params.id },
-      columns: [ 'id', 'name', 'account', 'gender', 'age', 'phone' ],
+      columns: [ 'id', 'name', 'account', 'gender', 'age', 'phone', 'role_id' ],
       order: [[ 'id', 'desc' ]],
       limit: 1,
     });

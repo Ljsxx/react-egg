@@ -3,7 +3,7 @@ import { Provider } from './context'
 import { browserHistory } from './history'
 const url = require('url')
 
-class HashRouter extends Component {
+class BrowserRouter extends Component {
   constructor () {
     super()
     this.state = {
@@ -35,6 +35,7 @@ class HashRouter extends Component {
 
   render () {
     let value = {
+      type: 'BrowserRouter',
       history: browserHistory,
       location: Object.assign({
         pathname: '/'
@@ -48,4 +49,4 @@ class HashRouter extends Component {
   }
 }
 
-export default HashRouter
+export default BrowserRouter
